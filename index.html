@@ -98,9 +98,9 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
   </div>
   <div class="st">원료 단가</div>
   <div class="g3">
-    <div class="ig"><label>원료+방사 (원/kg) — 기준 시점</label><input type="number" id="b_mk" value="2000" oninput="calcBase()"></div>
-    <div class="ig"><label>매입단가 — 210합 (원/m²)</label><input type="number" id="b_pp1" value="1063.8" oninput="calcBase()"></div>
-    <div class="ig"><label>매입단가 — 60결망 (원/m²)</label><input type="number" id="b_pp2" value="750" oninput="calcBase()"></div>
+    <div class="ig"><label>원료+방사 (원/kg) — 기준 시점</label><input type="text" id="b_mk" value="2000" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
+    <div class="ig"><label>매입단가 — 210합 (원/m²)</label><input type="text" id="b_pp1" value="1063.8" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
+    <div class="ig"><label>매입단가 — 60결망 (원/m²)</label><input type="text" id="b_pp2" value="750" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
   </div>
   <div class="st">기준 판매단가</div>
   <div class="tbl-wrap"><table>
@@ -140,9 +140,9 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
   </div>
   <div class="st">원료 단가 (현재)</div>
   <div class="g3">
-    <div class="ig"><label>원료+방사 (원/kg)</label><input type="number" id="c_mk" value="3200" oninput="calcCur()"></div>
-    <div class="ig"><label>매입단가 — 210합 (원/m²)</label><input type="number" id="c_pp1" value="1063.8" oninput="calcCur()"></div>
-    <div class="ig"><label>매입단가 — 60결망 (원/m²)</label><input type="number" id="c_pp2" value="750" oninput="calcCur()"></div>
+    <div class="ig"><label>원료+방사 (원/kg)</label><input type="text" id="c_mk" value="3200" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
+    <div class="ig"><label>매입단가 — 210합 (원/m²)</label><input type="text" id="c_pp1" value="1063.8" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
+    <div class="ig"><label>매입단가 — 60결망 (원/m²)</label><input type="text" id="c_pp2" value="750" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
   </div>
   <div class="smry">
     <div class="sc">
@@ -611,7 +611,7 @@ async function loadAll(){
     const rows=await res.json();
     if(!rows.length||!rows[0].params)return;
     const d=rows[0];
-    const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.value=v;};
+    const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null){el.value=v;if(el.type==='text')fmtInput(el);}};
     ['tp','ta','tb','mc','ac','gc','oc','mk','pp1','pp2'].forEach(k=>{
       sv('b_'+k,d.params.bParams[k]); sv('c_'+k,d.params.cParams[k]);
     });
@@ -627,7 +627,10 @@ async function loadAll(){
 }
 
 // ─── 초기 실행 ───────────────────────────────────────────
-(async()=>{ await loadAll(); calcBase(); if(locked) calcCur(); })();
+// 정적 입력 초기 콤마 포맷 (loadAll 덮어쓰기 전 기본값 포맷)
+const BIG_IDS=['b_tp','b_ta','b_tb','b_mc','b_ac','b_gc','b_oc','b_mk','b_pp1','b_pp2','c_tp','c_ta','c_tb','c_mc','c_ac','c_gc','c_oc','c_mk','c_pp1','c_pp2'];
+function fmtAllStatic(){BIG_IDS.forEach(id=>{const el=document.getElementById(id);if(el)fmtInput(el);});}
+(async()=>{ await loadAll(); fmtAllStatic(); calcBase(); if(locked) calcCur(); })();
 </script>
 </body>
 </html>

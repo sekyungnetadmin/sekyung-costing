@@ -85,16 +85,16 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
   <div class="note">기준 시점(예: 3월) 데이터를 입력하고 <strong>기준 잠금</strong>을 누르면 각 품목의 마진율이 저장됩니다.</div>
   <div class="st">생산량</div>
   <div class="g3">
-    <div class="ig"><label>연간 총 생산 m² (기계인건비 기준)</label><input type="number" id="b_tp" value="1172573" oninput="calcBase()"></div>
-    <div class="ig"><label>연간 총 조립 m² (조립·관리인건비 기준)</label><input type="number" id="b_ta" value="1179540" oninput="calcBase()"></div>
-    <div class="ig"><label>총 생산+조립 m² (기타관리비 기준)</label><input type="number" id="b_tb" value="1323390" oninput="calcBase()"></div>
+    <div class="ig"><label>연간 총 생산 m² (기계인건비 기준)</label><input type="text" id="b_tp" value="1,172,573" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
+    <div class="ig"><label>연간 총 조립 m² (조립·관리인건비 기준)</label><input type="text" id="b_ta" value="1,179,540" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
+    <div class="ig"><label>총 생산+조립 m² (기타관리비 기준)</label><input type="text" id="b_tb" value="1,323,390" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
   </div>
   <div class="st">인건비 (연간합계)</div>
   <div class="g4">
-    <div class="ig"><label>기계 인건비 (원)</label><input type="number" id="b_mc" value="302870000" oninput="calcBase()"></div>
-    <div class="ig"><label>조립 인건비 (원)</label><input type="number" id="b_ac" value="350280000" oninput="calcBase()"></div>
-    <div class="ig"><label>관리 인건비 (원)</label><input type="number" id="b_gc" value="453640000" oninput="calcBase()"></div>
-    <div class="ig"><label>기타관리비 (원)</label><input type="number" id="b_oc" value="350000000" oninput="calcBase()"></div>
+    <div class="ig"><label>기계 인건비 (원)</label><input type="text" id="b_mc" value="302,870,000" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
+    <div class="ig"><label>조립 인건비 (원)</label><input type="text" id="b_ac" value="350,280,000" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
+    <div class="ig"><label>관리 인건비 (원)</label><input type="text" id="b_gc" value="453,640,000" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
+    <div class="ig"><label>기타관리비 (원)</label><input type="text" id="b_oc" value="350,000,000" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="calcBase()"></div>
   </div>
   <div class="st">원료 단가</div>
   <div class="g3">
@@ -127,16 +127,16 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
   <div class="note">비용 변동 수치를 입력하세요. 단가는 기준 단가로 고정한 채 마진율 하락폭을 확인합니다.</div>
   <div class="st">생산량</div>
   <div class="g3">
-    <div class="ig"><label>연간 총 생산 m²</label><input type="number" id="c_tp" value="1172573" oninput="calcCur()"></div>
-    <div class="ig"><label>연간 총 조립 m²</label><input type="number" id="c_ta" value="1179540" oninput="calcCur()"></div>
-    <div class="ig"><label>총 생산+조립 m²</label><input type="number" id="c_tb" value="1323390" oninput="calcCur()"></div>
+    <div class="ig"><label>연간 총 생산 m²</label><input type="text" id="c_tp" value="1,172,573" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
+    <div class="ig"><label>연간 총 조립 m²</label><input type="text" id="c_ta" value="1,179,540" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
+    <div class="ig"><label>총 생산+조립 m²</label><input type="text" id="c_tb" value="1,323,390" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
   </div>
   <div class="st">인건비 (연간합계)</div>
   <div class="g4">
-    <div class="ig"><label>기계 인건비 (원)</label><input type="number" id="c_mc" value="302870000" oninput="calcCur()"></div>
-    <div class="ig"><label>조립 인건비 (원)</label><input type="number" id="c_ac" value="350280000" oninput="calcCur()"></div>
-    <div class="ig"><label>관리 인건비 (원)</label><input type="number" id="c_gc" value="453640000" oninput="calcCur()"></div>
-    <div class="ig"><label>기타관리비 (원)</label><input type="number" id="c_oc" value="350000000" oninput="calcCur()"></div>
+    <div class="ig"><label>기계 인건비 (원)</label><input type="text" id="c_mc" value="302,870,000" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
+    <div class="ig"><label>조립 인건비 (원)</label><input type="text" id="c_ac" value="350,280,000" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
+    <div class="ig"><label>관리 인건비 (원)</label><input type="text" id="c_gc" value="453,640,000" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
+    <div class="ig"><label>기타관리비 (원)</label><input type="text" id="c_oc" value="350,000,000" onfocus="unFmtInput(this)" onblur="fmtInput(this);calcCur()" oninput="calcCur()"></div>
   </div>
   <div class="st">원료 단가 (현재)</div>
   <div class="g3">
@@ -210,6 +210,15 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
 </div>
 
 <script>
+// ─── 입력값 콤마 포맷 ────────────────────────────────────
+function fmtInput(el){
+  const v=el.value.replace(/,/g,'');
+  if(v===''||isNaN(+v))return;
+  el.value=(+v).toLocaleString('ko-KR');
+}
+function unFmtInput(el){
+  el.value=el.value.replace(/,/g,'');
+}
 // ─── 품목 데이터 ───────────────────────────────────────────
 // ch: fil=필판매, asm=조립판매, pur=매입조립
 // m2f: m² per 필 (fil), m² per 필사용단위(asm에서는 기준m²)
@@ -241,7 +250,7 @@ const GRP_LABEL={fil:'▸ 필 판매',asm:'▸ 조립 판매 (자체생산)',pur
 let locked=false;
 
 // ─── 유틸 ─────────────────────────────────────────────────
-const gv=id=>+(document.getElementById(id)?.value)||0;
+const gv=id=>+(document.getElementById(id)?.value?.replace(/,/g,'')||0);
 
 function getR(p){
   return{
@@ -351,9 +360,9 @@ function calcBase(){
       <td class="ti" style="color:#888">${fq(p)}</td>
       <td class="ti" style="color:#1a56db;font-size:11px">${rawC!==null?fw(rawC):'-'}</td>
       <td class="ti">
-        <input type="number" value="${p.bPrice}"
+        <input type="number" value="${p.bPrice.toLocaleString('ko-KR')}"
           style="width:90px;text-align:right;border:1px solid #e0e0e0;border-radius:4px;padding:4px 6px;font-size:12px;"
-          oninput="PR[${i}].bPrice=+this.value;calcBase()">
+          onfocus="unFmtInput(this)" onblur="fmtInput(this);calcBase()" oninput="PR[${i}].bPrice=+(this.value.replace(/,/g,''))||0;calcBase()">
       </td>
       <td class="ti" style="color:#888">${Math.round(cost).toLocaleString()}</td>
       <td class="ti">${fw(ts)}</td>

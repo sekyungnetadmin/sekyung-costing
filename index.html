@@ -473,10 +473,10 @@ function showRev(){
       <td class="ti bold" style="background:#f8f9ff">${need!==null?Math.round(need).toLocaleString():'-'}</td>
       <td class="ti ${iPct!==null?(iPct>0?'dup':'ddn'):''}" style="background:#f8f9ff">${iPct!==null?(iPct>0?'+':'')+fr(iPct):'-'}</td>
       <td style="background:#f0fdf4" class="ti">
-        <input type="number" placeholder="단가 입력" value="${p.custPrice||''}"
+        <input type="text" placeholder="단가 입력" value="${p.custPrice ? p.custPrice.toLocaleString('ko-KR') : ''}"
           data-pid="${p.id}"
           style="width:88px;text-align:right;border:1px solid #a7f3d0;border-radius:4px;padding:4px 6px;font-size:12px;background:#fff;"
-          oninput="onCustInput(${p.id},+this.value||null)">
+          oninput="onCustInput(${p.id},+(this.value.replace(/,/g,''))||null)">
       </td>
       <td id="cr-${p.id}" class="ti ${custRate!==null?mc(custRate):''}" style="background:#f0fdf4;font-weight:600">
         ${custRate!==null?fr(custRate):'-'}

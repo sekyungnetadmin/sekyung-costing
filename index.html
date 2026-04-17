@@ -550,33 +550,53 @@ function sw(name,el){
   if(name==='rev') showRev();
 }
 
-// ─── 저장/불러오기 (localStorage key v4로 변경) ──────────
-function saveAll(){
+// ─── Supabase 설정 ───────────────────────────────────────
+const SUPA_URL='https://xfmakrbjiyhgqeycbpiu.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbWFrcmJqaXloZ3FleWNicGl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzOTYwMjQsImV4cCI6MjA5MTk3MjAyNH0.TDCnbN72YAkWsRxEHgQby93udbnIcpTR5j5YMu5NLB0';
+const SUPA_HDR={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
+
+// ─── 저장 (Supabase upsert) ──────────────────────────────
+async function saveAll(){
+  const keys=['tp','ta','tb','mc','ac','gc','oc','mk','pp1','pp2'];
+  const bp={},cp={};
+  keys.forEach(k=>{bp[k]=gv('b_'+k);cp[k]=gv('c_'+k);});
+  const body=JSON.stringify({
+    id:'singleton',
+    params:{bParams:bp,cParams:cp},
+    products:PR.map(p=>({id:p.id,bPrice:p.bPrice,bRate:p.bRate,custPrice:p.custPrice})),
+    locked,
+    updated_at:new Date().toISOString()
+  });
+  const b=document.getElementById('savebtn');
+  b.textContent='저장 중...';
   try{
-    const keys=['tp','ta','tb','mc','ac','gc','oc','mk','pp1','pp2'];
-    const bp={},cp={};
-    keys.forEach(k=>{bp[k]=gv('b_'+k);cp[k]=gv('c_'+k);});
-    localStorage.setItem('skg-rev-v4',JSON.stringify({
-      locked, bParams:bp, cParams:cp,
-      products:PR.map(p=>({id:p.id,bPrice:p.bPrice,bRate:p.bRate,custPrice:p.custPrice}))
-    }));
-    const b=document.getElementById('savebtn');
-    b.textContent='저장됨 ✓'; setTimeout(()=>b.textContent='저장',1800);
-  }catch(e){}
+    const res=await fetch(SUPA_URL+'/rest/v1/costing_data',{
+      method:'POST',
+      headers:{...SUPA_HDR,'Prefer':'resolution=merge-duplicates,return=minimal'},
+      body
+    });
+    b.textContent=res.ok?'저장됨 ✓':'저장 실패 ✗';
+  }catch(e){ b.textContent='저장 실패 ✗'; }
+  setTimeout(()=>b.textContent='저장',1800);
 }
 
-function loadAll(){
+// ─── 불러오기 (Supabase select) ──────────────────────────
+async function loadAll(){
   try{
-    const s=localStorage.getItem('skg-rev-v4');
-    if(!s)return;
-    const d=JSON.parse(s);
+    const res=await fetch(SUPA_URL+'/rest/v1/costing_data?id=eq.singleton&select=*',{
+      headers:SUPA_HDR
+    });
+    if(!res.ok)return;
+    const rows=await res.json();
+    if(!rows.length||!rows[0].params)return;
+    const d=rows[0];
     const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.value=v;};
     ['tp','ta','tb','mc','ac','gc','oc','mk','pp1','pp2'].forEach(k=>{
-      sv('b_'+k,d.bParams[k]); sv('c_'+k,d.cParams[k]);
+      sv('b_'+k,d.params.bParams[k]); sv('c_'+k,d.params.cParams[k]);
     });
     d.products.forEach(s=>{
       const p=PR.find(x=>x.id===s.id);
-      if(p){ p.bPrice=s.bPrice; p.bRate=s.bRate; p.custPrice=s.custPrice||null; }
+      if(p){p.bPrice=s.bPrice;p.bRate=s.bRate;p.custPrice=s.custPrice||null;}
     });
     if(d.locked){
       locked=true;
@@ -586,7 +606,7 @@ function loadAll(){
 }
 
 // ─── 초기 실행 ───────────────────────────────────────────
-loadAll(); calcBase(); if(locked) calcCur();
+(async()=>{ await loadAll(); calcBase(); if(locked) calcCur(); })();
 </script>
 </body>
 </html>
